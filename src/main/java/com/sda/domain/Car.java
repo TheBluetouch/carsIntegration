@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
@@ -16,7 +18,10 @@ import javax.persistence.Id;
 public class Car {
 
     @Id
-    private Long UserId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    private Long userId;
 
     private String company;
 
@@ -29,6 +34,4 @@ public class Car {
     private String userSurname;
 
     private Integer userAge;
-
-
 }

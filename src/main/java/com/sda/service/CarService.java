@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 public class CarService {
 
-    private static String USERS_URL = "http://localhost/8051/user/";
+    private static String USERS_URL = "http://localhost/8051/user/external/";
 
     private final CarRepository carRepository;
 
@@ -31,6 +31,7 @@ public class CarService {
     public Car create(CreateCarDto dto) {
         Long userId = dto.getUserId();
         UserView userView = getUserFromExternalService(userId);
+
         Car car = Car.builder()
                 .company(dto.getCompany())
                 .model(dto.getModel())
@@ -47,6 +48,8 @@ public class CarService {
     public UserView getUserFromExternalService(Long userId) {
         return restTemplate.getForObject(USERS_URL + userId, UserView.class);
     }
+
+    public List<Car> findAll(){return carRepository.findAll();}
 
     public List<CarView> findForUser(Long userId) {
         return carRepository.findUserByUserId(userId)
